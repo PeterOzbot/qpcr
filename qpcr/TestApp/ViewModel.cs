@@ -12,9 +12,9 @@ namespace TestApp
     public class ViewModel
     {
         public int PlateSize { get; set; } = 96;
-        public string Samples { get; set; } = "[['Sam 1', 'Sam 2', 'Sam 3'], ['Sam 1', 'Sam 3', 'Sam 4']]";
-        public string Reagents { get; set; } = "[['Reag X', 'Reag Y'], ['Reag Y', 'Reag Z']]";
-        public string Replicates { get; set; } = "[1, 3]";
+        public string Samples { get; set; } = " [['Sample-1', 'Sample-2', 'Sample-3'], ['Sample-1', 'Sample-2', 'Sample-3']]";
+        public string Reagents { get; set; } = " [['<Pink>'], ['<Green>']]";
+        public string Replicates { get; set; } = "[3, 2]";
 
 
         public void Generate()
