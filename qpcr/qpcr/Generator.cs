@@ -17,15 +17,59 @@ namespace qpcr
             }
             int experimentsCount = samples.Count;
 
-            // initialize end result
+            // generate all wells
+            var allWells = GenerateAllWells(experimentsCount, samples, reagents, replicates);
+
+            // order them by sample/reagent
+            var orderedWells = allWells.OrderBy(w => w.Sample).ThenBy(w => w.Reagent);
+
+            // generate plates
+            var plates = GeneratePlates(orderedWells, plateSize);
+
+            return plates;
+        }
+
+        private List<Well[,]> GeneratePlates(IEnumerable<Well> orderedWells, int plateSize)
+        {
             var result = new List<Well[,]>();
             int currentRowIndex = 0;
-            int currentColumnIndex = 0;
+            int currentColumnIndex = -1;
             int maxRowCount;
             int maxColumnCount;
+
             Well[,] plate = GetPlate(plateSize, out maxRowCount, out maxColumnCount);
             result.Add(plate);
 
+            foreach (Well well in orderedWells)
+            {
+                if (currentColumnIndex < maxColumnCount - 1)
+                {
+                    currentColumnIndex++;
+                }
+                else
+                {
+                    currentColumnIndex = 0;
+                    if (currentRowIndex < maxRowCount - 1)
+                    {
+                        currentRowIndex++;
+                    }
+                    else
+                    {
+                        plate = GetPlate(plateSize, out maxRowCount, out maxColumnCount);
+                        result.Add(plate);
+                        currentColumnIndex = 0;
+                        currentRowIndex = 0;
+                    }
+                }
+
+                plate[currentRowIndex, currentColumnIndex] = well;
+            }
+
+            return result;
+        }
+
+        private IEnumerable<Well> GenerateAllWells(int experimentsCount, List<List<string>> samples, List<List<string>> reagents, List<int> replicates)
+        {
             // generate for each experiment
             for (int experimentIndex = 0; experimentIndex < experimentsCount; experimentIndex++)
             {
@@ -41,30 +85,11 @@ namespace qpcr
                     {
                         foreach (var well in Enumerable.Repeat(new Well { Sample = sample, Reagent = reagent, Experiment = experimentIndex }, currentReplicates))
                         {
-                            if (IsPlateFull(currentRowIndex, currentColumnIndex, maxRowCount, maxColumnCount))
-                            {
-                                result.Add(plate);
-                                plate = GetPlate(plateSize, out maxRowCount, out maxColumnCount);
-                            }
-
-                            plate[currentRowIndex, currentColumnIndex] = well;
-                            currentColumnIndex++;
-
-                            //if(currentRowIndex == plate[0])
+                            yield return well;
                         }
                     }
-                    currentRowIndex++;
-                    currentColumnIndex = 0;
                 }
             }
-
-
-            return result;
-        }
-
-        private bool IsPlateFull(int currentRowIndex, int currentColumnIndex, int maxRowCount, int maxColumnCount)
-        {
-            return currentRowIndex == maxRowCount - 1 && currentColumnIndex == maxColumnCount - 1;
         }
 
         private Well[,] GetPlate(int plateSize, out int rowCount, out int columnCount)

@@ -13,9 +13,11 @@ namespace TestApp
     public class ViewModel : INotifyPropertyChanged
     {
         public int PlateSize { get; set; } = 96;
-        public string Samples { get; set; } = " [['Sample-1', 'Sample-2', 'Sample-3'], ['Sample-1', 'Sample-2', 'Sample-3']]";
-        public string Reagents { get; set; } = " [['<Pink>', '<Red>'], ['<Green>', '<Red>']]";
-        public string Replicates { get; set; } = "[3, 2]";
+        //public string Samples { get; set; } = " [['Sample-1', 'Sample-2', 'Sample-3'], ['Sample-1', 'Sample-2', 'Sample-3']]";
+        public string Samples { get; set; } = " [['Sample-1', 'Sample-2', 'Sample-3'], ['Sample-3']]";
+        public string Reagents { get; set; } = " [['<Pink>', '<Red>', '<Green>'], ['<Green>', '<Red>']]";
+        //public string Reagents { get; set; } = " [['<Pink>'], ['<Green>']]";
+        public string Replicates { get; set; } = "[3, 20]";
         public List<List<List<Well>>> Result { get; set; }
         public Command GenerateCommand { get; set; }
 

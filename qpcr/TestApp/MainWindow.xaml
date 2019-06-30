@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="1600">
     <Window.Resources>
+        <local:ColorConverter x:Key="ColorConverter"/>
         <DataTemplate x:Key="WellTemplate">
-            <Border BorderThickness="1" BorderBrush="Black" Width="125">
+            <Border BorderThickness="1" BorderBrush="Black" Width="125"
+                    Background="{Binding Reagent, Converter={StaticResource ColorConverter}}">
                 <StackPanel Orientation="Vertical" Margin="5">
                     <TextBlock Text="{Binding Sample}"/>
                     <TextBlock Text="{Binding Reagent}"/>
@@ -55,7 +57,7 @@
         <TextBox Text="{Binding Reagents}" Grid.Row="2"></TextBox>
         <TextBox Text="{Binding Replicates}" Grid.Row="3"></TextBox>
         <Button Content="Generate" Command="{Binding GenerateCommand}" Grid.Row="4"/>
-        <ScrollViewer Grid.Row="5">
+        <ScrollViewer Grid.Row="5" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
             <ItemsControl  ItemsSource="{Binding Result}" ItemTemplate="{DynamicResource PlatesTemplate}"/>
         </ScrollViewer>
     </Grid>
