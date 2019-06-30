@@ -31,10 +31,6 @@ bld/
 TestResult.xml
 test-results.xml
 
-# code coverage data
-.nyc_output/
-coverage/
-
 # Build Results of an ATL Project
 #[Dd]ebugPS/
 #[Rr]eleasePS/
@@ -99,7 +95,7 @@ PublishScripts/
 # NuGet Packages
 *.nupkg
 # The packages folder can be ignored because of Package Restore
-Server/Packages/*
+qpcr/Packages/*
 # except build/, which is used as an MSBuild target.
 #!**/packages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
@@ -107,8 +103,6 @@ Server/Packages/*
 # NuGet v3's project.json files produces more ignoreable files
 *.nuget.props
 *.nuget.targets
-# Generated NuGet packages
-Server/Packages-Output/*
 
 # Microsoft Azure Build Output
 csx/
@@ -124,17 +118,9 @@ rcf/
 # but keep track of directories ending in .cache
 !*.[Cc]ache/
 
-# Others
-.vscode/launch.json
-.vscode/settings.json
-bower_components/
-
 # SQL Server files
 *.mdf
 *.ldf
-
-# FAKE - F# Make
-.fake/
 
 # AdInsure Build
 .tmp
