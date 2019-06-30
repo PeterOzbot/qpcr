@@ -25,10 +25,5 @@ namespace TestApp
             InitializeComponent();
             DataContext = new ViewModel();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            (DataContext as ViewModel).Generate();
-        }
     }
 }
